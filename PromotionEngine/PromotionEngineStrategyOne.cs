@@ -17,7 +17,7 @@ namespace PromotionEngine
                 if (itemsByCount.ContainsKey(item))
                     itemsByCount[item]++;
                 else
-                    itemsByCount.Add(item,1);
+                    itemsByCount.Add(item, 1);
             }
 
             return GetPrice(sku);
@@ -28,17 +28,30 @@ namespace PromotionEngine
             var priceListByItem = sku.GetItemByPrice();
 
             double totalPrice = 0;
-
-            var totalA = itemsByCount['A'];
-            var priceA = priceListByItem['A'];
-            totalPrice += (totalA / 3) * 130 + (totalA % 3) * priceA;
-
-            var totalB = itemsByCount['B'];
-            var priceB = priceListByItem['B'];
-            totalPrice += (totalB / 2) * 45 + (totalB % 2) * 30;
-
-            var totalC = itemsByCount['C'];
-            var totalD = itemsByCount['D'];
+            int totalC = 0, totalD = 0;
+            foreach (var item in itemsByCount)
+            {
+                if (item.Key == 'A')
+                {
+                    var totalA = item.Value;
+                    var priceA = priceListByItem['A'];
+                    totalPrice += (totalA / 3) * 130 + (totalA % 3) * priceA;
+                }
+                else if (item.Key == 'B')
+                {
+                    var totalB = item.Value;
+                    var priceB = priceListByItem['B'];
+                    totalPrice += (totalB / 2) * 45 + (totalB % 2) * priceB;
+                }
+                else if (item.Key == 'C')
+                {
+                    totalC = item.Value;
+                }
+                else if(item.Key == 'D')
+                {
+                    totalD = item.Value;
+                }
+            }
 
             while (totalC != 0 && totalD != 0)
             {
@@ -51,6 +64,7 @@ namespace PromotionEngine
                 totalPrice += totalC * priceListByItem['C'];
             if (totalD != 0)
                 totalPrice += totalD * priceListByItem['D'];
+
             return totalPrice;
         }
     }

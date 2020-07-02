@@ -12,17 +12,9 @@ namespace PromotionEngine
         private List<char> items = new List<char>();
         Dictionary<char, double> itemByPrice = new Dictionary<char, double>();
 
-        public SKU()
+        public SKU(Dictionary<char,double> itemsByPrice)
         {
-            itemByPrice.Add('A', 50);
-            itemByPrice.Add('B',30);
-            itemByPrice.Add('C',20);
-            itemByPrice.Add('D',15);
-
-            for (int i = 4; i < 26; i++)
-            {
-                itemByPrice.Add((char)('A'+i), 0);
-            }
+            this.itemByPrice = itemsByPrice;
         }
 
         public void AddToSKU(char item)
